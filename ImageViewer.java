@@ -32,6 +32,7 @@ public class ImageViewer
     private JLabel statusLabel;
     private JButton smallerButton;
     private JButton largerButton;
+    private JButton quadrantButton;
     private OFImage currentImage;
     
     private List<Filter> filters;
@@ -196,6 +197,51 @@ public class ImageViewer
         }
     }
     
+    private void quadrant(){
+        if(currentImage != null) {
+            // create new image with double size
+            int width = currentImage.getWidth() / 2;
+            int height = currentImage.getHeight() / 2;
+            // create a canvas of equal size
+            OFImage newImage = new OFImage(currentImage.getWidth(), currentImage.getHeight());
+
+            
+            // set first quadrant
+            for(int y = 0; y < height; y++) {
+                for(int x = 0; x < width; x++) {
+                    newImage.setPixel(x, y, currentImage.getPixel(x * 2, y * 2));
+                }
+            }
+            
+            // set second quadrant
+            for(int y = 0; y < height; y++) {
+                for(int x = 0; x < width; x++) {
+                    newImage.setPixel(x + width, y, currentImage.getPixel(x * 2, y * 2));
+                }
+            }
+            
+            // set 4th quadrant
+            for(int y = 0; y < height; y++) {
+                for(int x = 0; x < width; x++) {
+                    newImage.setPixel(x + width, y + height, currentImage.getPixel(x * 2, y * 2));
+                }
+            }
+            
+            // set 3rd quadrant
+            for(int y = 0; y < height; y++) {
+                for(int x = 0; x < width; x++) {
+                    newImage.setPixel(x, y + height, currentImage.getPixel(x * 2, y * 2));
+                }
+            }
+            
+            
+            
+            currentImage = newImage;
+            imagePanel.setImage(currentImage);
+            frame.pack();
+        }
+    }
+    
     // ---- support methods ----
 
     /**
@@ -257,6 +303,9 @@ public class ImageViewer
         filterList.add(new FishEyeFilter("Fish Eye"));
         filterList.add(new RemoveBlueFilter("Remove Blue"));
         filterList.add(new RedChannelFilter("Red Channel Filter"));
+        filterList.add(new BlueChannelFilter("Blue Channel Filter"));
+        filterList.add(new GreenChannelFilter("Green Channel Filter"));
+        filterList.add(new AndyWarholFilter("Andy Warhol"));
        
         return filterList;
     }
@@ -296,6 +345,11 @@ public class ImageViewer
         smallerButton = new JButton("Smaller");
         smallerButton.addActionListener(e -> makeSmaller());
         toolbar.add(smallerButton);
+        
+        quadrantButton = new JButton("Quadrant");
+        quadrantButton.addActionListener(e -> quadrant());
+        toolbar.add(quadrantButton);
+        
         
         largerButton = new JButton("Larger");
         largerButton.addActionListener(e -> makeLarger());
