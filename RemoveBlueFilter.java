@@ -1,13 +1,14 @@
 import java.awt.Color;
 /**
- * Write a description of class RedChannelFilter here.
+ * Write a description of class RemoveBlueFilter here.
  *
  * @author (your name)
  * @version (a version number or a date)
  */
-public class RedChannelFilter extends Filter
+public class RemoveBlueFilter extends Filter
 {
-   public RedChannelFilter(String name)
+ 
+    public RemoveBlueFilter(String name)
     {
         super(name);
     }
@@ -24,8 +25,10 @@ public class RedChannelFilter extends Filter
                 Color pix = image.getPixel(x, y);
                 int r = pix.getRed();
                 int g = pix.getGreen();
-                image.setPixel(x, y, new Color(r, r, r));
+                image.setPixel(x, y, new Color(r, g, 0));
             }
         }
     }
-}
+        
+    }
+    
