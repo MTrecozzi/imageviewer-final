@@ -383,7 +383,7 @@ public class ImageViewer
         
         quadrantButton = new JButton("Quadrant");
         quadrantButton.addActionListener(e -> quadrant());
-        toolbar.add(quadrantButton);
+        //toolbar.add(quadrantButton);
         
         
         largerButton = new JButton("Larger");
