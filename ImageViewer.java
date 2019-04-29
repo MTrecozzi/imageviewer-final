@@ -3,6 +3,7 @@ import java.awt.event.*;
 import java.awt.image.*;
 import javax.swing.*;
 import javax.swing.border.*;
+import java.awt.Color;
 
 import java.io.File;
 
@@ -213,6 +214,9 @@ public class ImageViewer
                 }
             }
             
+            
+            
+            
             // set second quadrant
             for(int y = 0; y < height; y++) {
                 for(int x = 0; x < width; x++) {
@@ -237,6 +241,37 @@ public class ImageViewer
             
             
             currentImage = newImage;
+            
+            // set second quadrant Red Channel
+            for(int y = 0; y < height; y++) {
+                for(int x = 0; x < width; x++) {
+                Color pix = currentImage.getPixel(x, y);
+                int r = pix.getRed();
+                
+                currentImage.setPixel(x + width, y, new Color(r, r, r));
+            }
+            }
+            
+            // set third Quadrant Green
+            for(int y = 0; y < height; y++) {
+                for(int x = 0; x < width; x++) {
+                Color pix = currentImage.getPixel(x, y);
+                int g = pix.getGreen();
+                
+                currentImage.setPixel(x, y + height, new Color(g, g, g));
+            }
+            }
+            
+            // set fourth Quadrant blue
+            for(int y = 0; y < height; y++) {
+                for(int x = 0; x < width; x++) {
+                Color pix = currentImage.getPixel(x, y);
+                int b = pix.getBlue();
+                
+                currentImage.setPixel(x + width, y + height, new Color(b, b, b));
+            }
+            }
+            
             imagePanel.setImage(currentImage);
             frame.pack();
         }
